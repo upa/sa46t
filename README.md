@@ -1,8 +1,8 @@
 SA46T
 =====
 
-This is SA46T (Stateless Automatic IPv4 over IPv6 Tunneling) open source
-implementation using linux tap interface.
+This is SA46T (Stateless Automatic IPv4 over IPv6 Tunneling) open
+source implementation using linux tap interface.
 
 ID : http://datatracker.ietf.org/doc/draft-matsuhira-sa46t-spec/
 
@@ -18,8 +18,9 @@ Compile
 How to Use
 ----------
 
-Example) how to use sa46t with plane id 99, and IPv4 prefix "10.0.0.0/24", 
-and mapping IPv6 prefix "2001:db8:1:1::/64". 
+Example)  
+how to use sa46t with plane id 99, and IPv4 prefix
+`10.0.0.0/24`, and mapping IPv6 prefix `2001:db8:1:1::/64`.
 
     /---------------------------------------------------\
     |                                                   |
@@ -40,13 +41,13 @@ and mapping IPv6 prefix "2001:db8:1:1::/64".
      \--------------/                   \--------------/
 
 
-SA46T1 advertises prefix 2001:db8\:1\:1\:99::a000/120 on OSPF to Backbone
-Network. And SA46T2 advertises 10.0.0.0/24 on OSPF to IPv4 Network.
+SA46T1 advertises prefix `2001:db8:1:1:99::a000/120` on Backbone
+Network. And SA46T2 advertises `10.0.0.0/24` on OSPF to IPv4 Network.
 Packets from IPv4 network to SA46T Stub Network, that have destination
 address 10.0.0.0/24, are encapsulated by SA46T2 with IPv6 header. The
 destination addrss of Encapsulated packets is
-2001\:db8\:1\:1\:99::a00X. Thereby encapsulated packets arrives at SA46T1.
-Then, packets are decapsulated and sent to the Stub Network.
+`2001:db8:1:1:99::a00X`. Thereby encapsulated packets arrives at
+SA46T1. Then, packets are decapsulated and sent to the Stub Network.
 
 The configuration of above topology is shown below.
 

@@ -104,3 +104,10 @@ SA46T configuration of above topology is shown below.
 	 # Redistribute 10.0.0.0/24 to IPv4 Network
 	 # and 2001:db8:1:1:0:9::/96 to Backbone Network using any routing daemons.
 
+
+ToDo
+----
+- Multiple Plane ID Support
+- Loading Configuration from config file
+- Enable SA46T to be use through vyatta(?)
+- Running on *BSD

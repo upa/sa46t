@@ -82,9 +82,9 @@ SA46T configuration of above topology is shown below.
 	           RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
 	 %
 	 % sudo ip route add to 0.0.0.0/0 dev sa46t
-	 % sudo ip -6 route add to 2001:db8:1:1:0:9:a00:0/108 dev sa46t
+	 % sudo ip -6 route add to 2001:db8:1:1:0:9:a00:0/120 dev sa46t
 	  
-	 # Redistribute 2001:db8:1:1:0:9:a00:0/108 to Backbone Network using any routing daemonds.
+	 # Redistribute 2001:db8:1:1:0:9:a00:0/120 to Backbone Network using any routing daemonds.
 
 
 ### SA46T2 ###

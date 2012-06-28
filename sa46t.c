@@ -158,13 +158,6 @@ process_ipv4_packet (const void * buf, size_t data_len)
 		return;
 	}
 
-#if 0
-	if ((ip->ip_off & IP_MF) > 0) {
-		process_ipv4_fragment_packet (buf);
-		return;
-	}
-#endif
-
 	sa46t_convert_4to6 (ip, &ip6, sa46t_prefix, plane_id);
 
 	tun_set_af (&pi, AF_INET6);	
@@ -183,39 +176,6 @@ process_ipv4_packet (const void * buf, size_t data_len)
 	return;
 }
 
-
-
-void
-process_ipv4_fragment_packet (const void * buf) 
-{
-	struct ip * ip;
-	struct ip6_hdr ip6;
-	struct ip6_frag	ip6f;
-	struct tun_pi pi;
-	struct iovec iov[4];
-
-	ip = (struct ip *) buf;
-
-	sa46t_convert_4to6 (ip, &ip6, sa46t_prefix, plane_id);
-	convert_fragment_4to6 (ip, &ip6f);
-	ip6.ip6_nxt = IPPROTO_FRAGMENT;
-	ip6f.ip6f_nxt = ip->ip_p;
-	
-	tun_set_af (&pi, AF_INET6);
-	iov[0].iov_base = &pi;
-	iov[0].iov_len	= sizeof (pi);
-	iov[1].iov_base = &ip6;
-	iov[1].iov_len 	= sizeof (ip6);
-	iov[2].iov_base = &ip6f;
-	iov[2].iov_len	= sizeof (ip6f);
-        iov[3].iov_base = (void *)(buf + (ip->ip_hl * 4));
-        iov[3].iov_len  = ntohs (ip6.ip6_plen);
-
-	if (writev (tun_fd, iov, 4) < 0)
-		warn ("writev IPv6 Packet failed");
-
-	return;
-}
 
 
 void
@@ -242,14 +202,6 @@ process_ipv6_packet (const void * buf, size_t data_len)
 		return;
 	}
 
-#if 0
-	if (ip6->ip6_nxt == IPPROTO_FRAGMENT) {
-		/* process IPv6 Fragment Packet */
-		process_ipv6_fragment_packet (buf);
-		return;
-	}
-#endif
-
 	sa46t_convert_6to4 (&ip, ip6);
 	ipv4_checksum (&ip);
 	
@@ -265,75 +217,6 @@ process_ipv6_packet (const void * buf, size_t data_len)
 	return;
 }
 
-void
-process_ipv6_fragment_packet (const void * buf)
-{
-	struct ip6_hdr 	* ip6;
-	struct ip6_frag * ip6f;
-	struct ip ip;
-	struct tun_pi pi;
-	struct iovec iov[3];
-
-	ip6 = (struct ip6_hdr *) buf;
-	ip6f = (struct ip6_frag *) (buf + sizeof (struct ip6_hdr));
-
-	convert_fragment_6to4 (ip6f, &ip);
-	sa46t_convert_6to4 (&ip, ip6);
-	ip.ip_p = ip6f->ip6f_nxt;
-	ipv4_checksum (&ip);	
-
-	tun_set_af (&pi, AF_INET);
-	iov[0].iov_base = &pi;
-	iov[0].iov_len	= sizeof (pi);
-	iov[1].iov_base = &ip;
-	iov[1].iov_len 	= sizeof (ip);
-	iov[2].iov_base = ip6 + 1;
-	iov[2].iov_len 	= ntohs (ip6->ip6_plen);
-
-	if (writev (tun_fd, iov, 3) < 0)
-		warn ("writev IPv6 Packet failed.");
-	return;
-}
-
-
-
-void
-convert_fragment_4to6 (struct ip * ip, struct ip6_frag * ip6_f)
-{
-	assert (ip != NULL && ip6_f != NULL);
-
-	memset (ip6_f, 0, sizeof (struct ip6_frag));
-
-	ip6_f->ip6f_offlg  = ip->ip_off & IP_OFFMASK;
-
-	if ((ip->ip_off & IP_MF) > 0) {
-		/* More Fragment */
-		ip6_f->ip6f_offlg |= IP6F_MORE_FRAG;
-	}
-
-	ip6_f->ip6f_ident |= ip->ip_id;
-
-	return;
-}
-
-void
-convert_fragment_6to4 (struct ip6_frag * ip6_f, struct ip * ip)
-{
-	assert (ip6_f != NULL && ip != NULL);
-
-	ip->ip_off = 0x0000;
-	ip->ip_off = ip6_f->ip6f_offlg & IP6F_OFF_MASK;
-
-	if ((ip6_f->ip6f_offlg & IP6F_MORE_FRAG) > 0) {
-		/* More Fragment */
-		ip->ip_off |= IP_MF;
-	}
-
-	ip->ip_id = 0x0000;
-	ip->ip_id |= ip6_f->ip6f_ident;
-
-	return;
-}
 
 
 u_int16_t

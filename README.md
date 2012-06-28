@@ -18,9 +18,9 @@ Compile
 How to Use
 ----------
 
-## Example ##
+### Example ###
 
-how to use sa46t with plane id 9, IPv4 prefix `10.0.0.0/24`,
+How to use sa46t with plane id 9, IPv4 prefix `10.0.0.0/24`,
 and mapping IPv6 prefix `2001:db8:1:1::/64`.
 
     /---------------------------------------------------\

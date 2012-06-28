@@ -18,7 +18,7 @@ Compile
 How to Use
 ----------
 
-Example)  
+** Example **
 
 how to use sa46t with plane id 9, IPv4 prefix `10.0.0.0/24`,
 and mapping IPv6 prefix `2001:db8:1:1::/64`.
@@ -50,7 +50,7 @@ addrss of Encapsulated packets is `2001:db8:1:1:0:9:a00:X`. Thereby
 encapsulated packets arrives at SA46T1. Then, packets are decapsulated
 and sent to the Stub Network.
 
-This implementation is not _routeing daemon_. It just provides sa46t
+This implementation is not a _routeing daemon_. It just provides sa46t
 tunnel interface. Therefore you have to set up some routing entity.
 e.g. configure static route to sa46t interface and redistribute static
 in _router ospf_ with quagga.

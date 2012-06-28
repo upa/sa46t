@@ -158,10 +158,12 @@ process_ipv4_packet (const void * buf, size_t data_len)
 		return;
 	}
 
+#if 0
 	if ((ip->ip_off & IP_MF) > 0) {
 		process_ipv4_fragment_packet (buf);
 		return;
 	}
+#endif
 
 	sa46t_convert_4to6 (ip, &ip6, sa46t_prefix, plane_id);
 
@@ -240,11 +242,13 @@ process_ipv6_packet (const void * buf, size_t data_len)
 		return;
 	}
 
+#if 0
 	if (ip6->ip6_nxt == IPPROTO_FRAGMENT) {
 		/* process IPv6 Fragment Packet */
 		process_ipv6_fragment_packet (buf);
 		return;
 	}
+#endif
 
 	sa46t_convert_6to4 (&ip, ip6);
 	ipv4_checksum (&ip);

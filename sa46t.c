@@ -80,6 +80,11 @@ main (int argc, char * argv[])
 				printf ("Plane id ID id specified by hex.\n");
 				return -1;
 			}
+			strncpy (tunname, TUNIF_NAME, IFNAMSIZ);
+			if (strncat (tunname, optarg, IFNAMSIZ) != tunname) {
+				err (EXIT_FAILURE, "Invalid tunname \"%s\"", tunname);
+			}
+			
 			break;
 
 		case 'd' :
@@ -95,12 +100,6 @@ main (int argc, char * argv[])
 		usage ();
 		return -1;
 	}
-
-#ifdef linux
-	strncpy (tunname, TUNIF_NAME, IFNAMSIZ);
-#else
-	sprintf (tunname, "tun%d",tun_get_next_intnum ());
-#endif
 
 	if ((tun_fd = tun_alloc (tunname)) < 0) 
 		return -1;

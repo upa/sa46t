@@ -52,7 +52,6 @@ main (int argc, char * argv[])
 	char buf[BUF_LEN];
 	struct tun_pi * pi = (struct tun_pi *) buf;
 
-
 	while ((ch = getopt (argc, argv, "s:p:d")) != -1) {
 		switch (ch) {
 		case 's' :
@@ -80,10 +79,6 @@ main (int argc, char * argv[])
 				printf ("Plane id ID id specified by hex.\n");
 				return -1;
 			}
-			strncpy (tunname, TUNIF_NAME, IFNAMSIZ);
-			if (strncat (tunname, optarg, IFNAMSIZ) != tunname) {
-				err (EXIT_FAILURE, "Invalid tunname \"%s\"", tunname);
-			}
 			
 			break;
 
@@ -96,6 +91,9 @@ main (int argc, char * argv[])
 			return -1;
 		}
 	}
+
+	snprintf (tunname, IFNAMSIZ, "%s%x", TUNIF_NAME, plane_id);
+
 	if (COMPARE_INET6_ADDR (sa46t_prefix, in6addr_any)) {
 		usage ();
 		return -1;

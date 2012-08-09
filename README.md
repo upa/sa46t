@@ -81,8 +81,8 @@ SA46T configuration of above topology is shown below.
 	           collisions:0 txqueuelen:500 
 	           RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
 	 %
-	 % sudo ip route add to 0.0.0.0/0 dev sa46t
-	 % sudo ip -6 route add to 2001:db8:1:1:0:9:a00:0/120 dev sa46t
+	 % sudo ip route add to 0.0.0.0/0 dev sa46t9
+	 % sudo ip -6 route add to 2001:db8:1:1:0:9:a00:0/120 dev sa46t9
 	  
 	 # Redistribute 2001:db8:1:1:0:9:a00:0/120 to Backbone Network using any routing daemonds.
 
@@ -98,8 +98,8 @@ SA46T configuration of above topology is shown below.
 	           collisions:0 txqueuelen:500 
 	           RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
 	 %
-	 % sudo ip route add to 10.0.0.0/24 dev sa46t
-	 % sudo ip -6 route add to 2001:db8:1:1:0:9::/96 dev sa46t
+	 % sudo ip route add to 10.0.0.0/24 dev sa46t9
+	 % sudo ip -6 route add to 2001:db8:1:1:0:9::/96 dev sa46t9
 	  
 	 # Redistribute 10.0.0.0/24 to IPv4 Network
 	 # and 2001:db8:1:1:0:9::/96 to Backbone Network using any routing daemons.

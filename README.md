@@ -72,7 +72,7 @@ SA46T configuration of above topology is shown below.
 	         -d : Run as a Daemon.
 		 
 	 # Create sa46t tunnel interface with plane ID 9
-	 % sudo /sa46t -s 2001:db8:1:1:: -p 9 -d
+	 % sudo ./sa46t -s 2001:db8:1:1:: -p 9 -d
 	 % ifconfig sa46t
 	 sa46t     Link encap:UNSPEC  HWaddr 00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00  
 	           UP POINTOPOINT RUNNING  MTU:1500  Metric:1
@@ -95,7 +95,7 @@ SA46T configuration of above topology is shown below.
 
 ### SA46T2 ###
 
-	 % sudo /sa46t -s 2001:db8:1:1:: -p 9 -d
+	 % sudo ./sa46t -s 2001:db8:1:1:: -p 9 -d
 	 % ifconfig sa46t
 	 sa46t     Link encap:UNSPEC  HWaddr 00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00  
 	           UP POINTOPOINT RUNNING  MTU:1500  Metric:1

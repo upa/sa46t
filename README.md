@@ -81,8 +81,14 @@ SA46T configuration of above topology is shown below.
 	           collisions:0 txqueuelen:500 
 	           RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
 	 %
+          
+	 # Set IPv4 default route via dev sa46t9, 
 	 % sudo ip route add to 0.0.0.0/0 dev sa46t9
 	 % sudo ip -6 route add to 2001:db8:1:1:0:9:a00:0/120 dev sa46t9
+          
+	 # Or, you don't want to set default route, use this command shown below,
+	 % sudo ip route add dev sa46t9 table 10
+	 % sudo ip rule add from 10.0.0.0/24 table 10 pref 10
 	  
 	 # Redistribute 2001:db8:1:1:0:9:a00:0/120 to Backbone Network using any routing daemonds.
 
